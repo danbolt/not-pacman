@@ -1,0 +1,6 @@
+# generated dependencies
+node_modules
+app/vendor
+
+# build directories
+build
