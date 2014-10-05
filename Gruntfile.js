@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         options: {
           port: 8080,
           base: 'build',
-          livereload: true
+          livereload: false
         }
       }
     },
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         files: 'app/**/*',
         tasks: ['typescript', 'copy'],
         options: {
-          livereload: true
+          livereload: false
         }
       }
     }
