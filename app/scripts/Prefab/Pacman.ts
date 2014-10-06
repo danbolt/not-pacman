@@ -12,17 +12,18 @@ module Pacman.Prefab
 
     private direction:Direction;
 
-    constructor(game:Phaser.Game, x:number, y:number, tileX:number, tileY:number)
+    private map:Phaser.Tilemap;
+
+    constructor(game:Phaser.Game, x:number, y:number, tileX:number, tileY:number, map:Phaser.Tilemap)
     {
       super(game, x, y, 'pacman-sheet', 0);
 
       this.tileX = tileX;
       this.tileY = tileY;
       this.tileStepCount = 0;
-
-      this.crop(new Phaser.Rectangle(229, 0, 16, 16), false);
-
       this.direction = Direction.East;
+
+      this.map = map;
 
       game.add.existing(this);
     }
@@ -30,6 +31,27 @@ module Pacman.Prefab
     update()
     {
       this.tileStepCount++;
+
+      if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+      {
+        this.direction = Direction.East;
+        //this.tileStepCount = 0;
+      }
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
+      {
+        this.direction = Direction.South;
+        //this.tileStepCount = 0;
+      }
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+      {
+        this.direction = Direction.West;
+        //this.tileStepCount = 0;
+      }
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+      {
+        this.direction = Direction.North;
+        //this.tileStepCount = 0;
+      }
 
       if (this.tileStepCount >= 8)
       {
@@ -55,6 +77,7 @@ module Pacman.Prefab
       var xOffset:number = 0;
       var yOffset:number = 0;
 
+      // setting offsets
       switch (this.direction)
       {
         case Direction.North:
@@ -68,6 +91,23 @@ module Pacman.Prefab
         break;
         case Direction.West:
           xOffset = -(this.tileStepCount);
+        break;
+      }
+
+      //reset crop
+      switch (this.direction)
+      {
+        case Direction.North:
+          this.crop(new Phaser.Rectangle(243, 32, 16, 16), false);
+        break;
+        case Direction.East:
+          this.crop(new Phaser.Rectangle(243, 0, 16, 16), false);
+        break;
+        case Direction.South:
+          this.crop(new Phaser.Rectangle(243, 48, 16, 16), false);
+        break;
+        case Direction.West:
+          this.crop(new Phaser.Rectangle(243, 16, 16, 16), false);
         break;
       }
 

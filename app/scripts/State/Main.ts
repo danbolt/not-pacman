@@ -20,7 +20,7 @@ module Pacman.State
       this.mapSprite = this.game.add.sprite(0, 0, 'pacman-sheet');
       this.mapSprite.crop(new Phaser.Rectangle(0, 0, 224, 248));
 
-      this.player1 = new Prefab.Pacman(this.game, 100, 100, 1, 1);
+      this.player1 = new Prefab.Pacman(this.game, 100, 100, 1, 1, this.map);
     }
   }
 }
