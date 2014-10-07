@@ -30,27 +30,59 @@ module Pacman.Prefab
 
     update()
     {
-      this.tileStepCount++;
 
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
       {
         this.direction = Direction.East;
-        //this.tileStepCount = 0;
       }
       else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
       {
         this.direction = Direction.South;
-        //this.tileStepCount = 0;
       }
       else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
       {
         this.direction = Direction.West;
-        //this.tileStepCount = 0;
       }
       else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
       {
         this.direction = Direction.North;
-        //this.tileStepCount = 0;
+      }
+
+      //this.tileStepCount++;
+
+      if (this.tileY >= 0 && this.tileY < this.map.layers[0].data.length && this.tileX >= 0 && this.tileX < this.map.layers[0].data[this.tileY].length)
+      {
+        switch (this.direction)
+        {
+          case Direction.North:
+            if (this.map.layers[0].data[this.tileY - 1][this.tileX].index == -1)
+            {
+              this.tileStepCount++;
+            }
+          break;
+          case Direction.East:
+            if (this.map.layers[0].data[this.tileY][this.tileX + 1].index == -1)
+            {
+              this.tileStepCount++;
+            }
+          break;
+          case Direction.South:
+            if (this.map.layers[0].data[this.tileY + 1][this.tileX].index == -1)
+            {
+              this.tileStepCount++;
+            }
+          break;
+          case Direction.West:
+            if (this.map.layers[0].data[this.tileY][this.tileX - 1].index == -1)
+            {
+              this.tileStepCount++;
+            }
+          break;
+        }
+      }
+      else
+      {
+        //console.log('watch yer index!');
       }
 
       if (this.tileStepCount >= 8)
@@ -111,8 +143,8 @@ module Pacman.Prefab
         break;
       }
 
-      this.x = this.tileX * 8 - 4 + xOffset; // the -4 is crude centering for the 16x16 sprite
-      this.y = this.tileY * 8 - 4 + yOffset;
+      this.x = this.tileX * 8 - 4; // the -4 is crude centering for the 16x16 sprite
+      this.y = this.tileY * 8 - 4;
     }
   }
 }
