@@ -30,19 +30,19 @@ module Pacman.Prefab
     update()
     {
       // set the direction of pacman based on the keyboard
-      if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+      if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT) && (this.map.layers[0].data[this.tileY][this.tileX + 1].index == -1))
       {
         this.direction = Direction.East;
       }
-      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && (this.map.layers[0].data[this.tileY + 1][this.tileX].index == -1))
       {
         this.direction = Direction.South;
       }
-      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT) && (this.map.layers[0].data[this.tileY][this.tileX - 1].index == -1))
       {
         this.direction = Direction.West;
       }
-      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP))
+      else if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP) && (this.map.layers[0].data[this.tileY - 1][this.tileX].index == -1))
       {
         this.direction = Direction.North;
       }
