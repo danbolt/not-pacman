@@ -5,10 +5,10 @@ module Pacman.State
 {
   export class Main extends Phaser.State
   {
-    private map:Phaser.Tilemap;
-    private layer:Phaser.TilemapLayer;
+    map:Phaser.Tilemap;
 
-    private player1:Prefab.Pacman;
+    player1:Prefab.Pacman;
+    dots:Prefab.Dot;
 
     private mapSprite:any;
 
@@ -16,13 +16,14 @@ module Pacman.State
     {
       this.stage.backgroundColor = 0xFF00FF;
 
+      // add the internal map (for logic)
       this.map = this.game.add.tilemap('pacman-maze');
 
+      // add a sprite overlay for the map
       this.mapSprite = this.game.add.sprite(0, 0, 'pacman-sheet');
       this.mapSprite.crop(new Phaser.Rectangle(0, 0, 224, 248));
 
-      //this.map.layers[0].data[this.tileY][this.tileX + 1]
-
+      // add the dots
       for (var iy = 0; iy < this.map.layers[0].data.length; iy++)
       {
         for (var ix = 0; ix < this.map.layers[0].data[iy].length; ix++)
@@ -34,11 +35,12 @@ module Pacman.State
 
           if (this.map.layers[0].data[iy][ix].index == -1)
           {
-            new Prefab.Dot(this.game, ix, iy);
+            new Prefab.Dot(this.game, ix, iy, this);
           }
         }
       }
 
+      // add player 1
       this.player1 = new Prefab.Pacman(this.game, 100, 100, 13, 17, this.map);
     }
   }

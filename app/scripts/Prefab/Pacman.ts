@@ -4,9 +4,8 @@ module Pacman.Prefab
 
   export class Pacman extends Phaser.Sprite
   {
-
-    private tileX:number;
-    private tileY:number;
+    tileX:number;
+    tileY:number;
 
     private tileStepCount:number;
 
@@ -30,7 +29,7 @@ module Pacman.Prefab
 
     update()
     {
-
+      // set the direction of pacman based on the keyboard
       if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
       {
         this.direction = Direction.East;
@@ -48,8 +47,7 @@ module Pacman.Prefab
         this.direction = Direction.North;
       }
 
-      //this.tileStepCount++;
-
+      // perform collision logic
       if (this.tileY >= 0 && this.tileY < this.map.layers[0].data.length && this.tileX >= 0 && this.tileX < this.map.layers[0].data[this.tileY].length)
       {
         switch (this.direction)
