@@ -126,7 +126,7 @@ module Pacman.Prefab
         break;
       }
 
-      //reset crop
+      //reset crop for sprite purposes
       switch (this.direction)
       {
         case Direction.North:
