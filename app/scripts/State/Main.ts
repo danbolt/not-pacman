@@ -20,6 +20,25 @@ module Pacman.State
       return {x: this.player1.tileX, y: this.player1.tileY};
     };
 
+    pinkyLogic = () =>
+    {
+      switch (this.player1.direction)
+      {
+        case Prefab.Direction.North:
+          return {x: this.player1.tileX - 4, y: this.player1.tileY - 4};
+        break;
+        case Prefab.Direction.East:
+          return {x: this.player1.tileX + 4, y: this.player1.tileY};
+        break;
+        case Prefab.Direction.South:
+          return {x: this.player1.tileX, y: this.player1.tileY + 4};
+        break;
+        case Prefab.Direction.West:
+          return {x: this.player1.tileX - 4, y: this.player1.tileY};
+        break;
+      }
+    };
+
     create()
     {
       this.stage.backgroundColor = 0xFF00FF;
@@ -50,7 +69,7 @@ module Pacman.State
 
       // add a ghost
       this.ghosts = new Array<Prefab.Ghost>();
-      this.ghosts.push(new Prefab.Ghost(this.game, 13, 11, this.map, this.blinkyLogic));
+      this.ghosts.push(new Prefab.Ghost(this.game, 13, 11, this.map, this.pinkyLogic));
 
       // add player 1
       this.player1 = new Prefab.Pacman(this.game, 100, 100, 13, 17, this.map);

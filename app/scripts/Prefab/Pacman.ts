@@ -1,6 +1,6 @@
 module Pacman.Prefab
 {
-  enum Direction {North, East, South, West}
+  export enum Direction {North, East, South, West}
 
   export class Pacman extends Phaser.Sprite
   {
@@ -9,7 +9,7 @@ module Pacman.Prefab
 
     private tileStepCount:number;
 
-    private direction:Direction;
+    direction:Direction;
 
     private map:Phaser.Tilemap;
 
