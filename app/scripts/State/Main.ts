@@ -1,5 +1,6 @@
 /// <reference path='../Prefab/Pacman.ts'/>
 /// <reference path='../Prefab/Dot.ts'/>
+/// <reference path='../Prefab/Ghost.ts'/>
 
 module Pacman.State
 {
@@ -11,6 +12,8 @@ module Pacman.State
     dots:Prefab.Dot;
 
     private mapSprite:any;
+
+    ghosts:Array<Prefab.Ghost>;
 
     create()
     {
@@ -39,6 +42,10 @@ module Pacman.State
           }
         }
       }
+
+      // add a ghost
+      this.ghosts = new Array<Prefab.Ghost>();
+      this.ghosts.push(new Prefab.Ghost(this.game, 13, 11, this.map));
 
       // add player 1
       this.player1 = new Prefab.Pacman(this.game, 100, 100, 13, 17, this.map);
