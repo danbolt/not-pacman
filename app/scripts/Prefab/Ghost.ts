@@ -16,7 +16,9 @@ module Pacman.Prefab
 
     private map:Phaser.Tilemap;
 
-    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap)
+    private computeTarget:()=>any;
+
+    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any)
     {
       super(game, 0, 0, 'pacman-sheet', 0);
 
@@ -28,6 +30,8 @@ module Pacman.Prefab
 
       this.target = {x: 21, y: 14};
       this.lastTileChangedDirectionAt = {x: tileX, y: tileY};
+
+      this.computeTarget = computeTarget;
 
       this.map = map;
 
@@ -133,6 +137,7 @@ module Pacman.Prefab
       this.step++;
 
       // compute target
+      this.target = this.computeTarget();
 
       // compute closest tile to target
       this.direction = this.newDirection(this.direction);
