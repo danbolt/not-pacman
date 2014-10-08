@@ -26,7 +26,7 @@ module Pacman.Prefab
       this.step = 0;
       this.direction = Direction.East;
 
-      this.target = {x: 1, y: 29};
+      this.target = {x: 21, y: 14};
       this.lastTileChangedDirectionAt = {x: tileX, y: tileY};
 
       this.map = map;
@@ -144,32 +144,21 @@ module Pacman.Prefab
         switch (this.direction)
         {
           case Direction.North:
-            if (this.map.layers[0].data[this.tileY - 1][this.tileX].index == -1)
-            {
-              this.tileY--;
-            }
+            this.tileY--;
           break;
           case Direction.South:
-            if (this.map.layers[0].data[this.tileY + 1][this.tileX].index == -1)
-            {
-              this.tileY++;
-            }
+            this.tileY++;
           break;
           case Direction.East:
-            if (this.map.layers[0].data[this.tileY][this.tileX + 1].index == -1)
-            {
-              this.tileX++;
-            }
+            this.tileX++;
           break;
           case Direction.West:
-            if (this.map.layers[0].data[this.tileY][this.tileX - 1].index == -1)
-            {
-              this.tileX--;
-            }
+            this.tileX--;
           break;
         }
       }
 
+      // position sprite for rendering
       this.x = this.tileX * 8 - 4;
       this.y = this.tileY * 8 - 4;
     }
