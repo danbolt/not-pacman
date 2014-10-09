@@ -16,7 +16,7 @@ module Pacman.Prefab
 
     private map:Phaser.Tilemap;
 
-    private computeTarget:()=>any;
+    computeTarget:()=>any;
 
     constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle)
     {

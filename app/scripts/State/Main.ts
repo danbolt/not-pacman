@@ -73,6 +73,27 @@ module Pacman.State
       };
     }
 
+    clydeLogic(player1:Prefab.Pacman)
+    {
+      var magicDistanceNumber:number = 8;
+
+      return () =>
+      {
+        var clyde:Prefab.Ghost = this.ghosts["clyde"];
+
+        var distanceToPlayer = Math.sqrt(Math.pow(clyde.tileX - player1.tileX, 2) + Math.pow(clyde.tileY - player1.tileY, 2));
+
+        if (distanceToPlayer > magicDistanceNumber)
+        {
+          return {x: this.player1.tileX, y: this.player1.tileY};
+        }
+        else
+        {
+          return {x: 0, y: 32};
+        }
+      };
+    }
+
     create()
     {
       this.stage.backgroundColor = 0xFF00FF;
@@ -107,7 +128,9 @@ module Pacman.State
       // add a ghost
       this.ghosts = new Array<Prefab.Ghost>();
       this.ghosts["blinky"] = new Prefab.Ghost(this.game, 13, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16));
+      this.ghosts["pinky"] = new Prefab.Ghost(this.game, 12, 11, this.map, this.pinkyLogic(), new Phaser.Rectangle(228, 80, 16, 16));
       this.ghosts["inky"] = new Prefab.Ghost(this.game, 11, 11, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16));
+      this.ghosts["clyde"] = new Prefab.Ghost(this.game, 10, 11, this.map, this.clydeLogic(this.player1), new Phaser.Rectangle(228, 112, 16, 16));
     }
   }
 }
