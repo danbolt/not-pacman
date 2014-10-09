@@ -4,8 +4,8 @@ module Pacman.Prefab
 
   export class Ghost extends Phaser.Sprite
   {
-    private tileX:number;
-    private tileY:number;
+    tileX:number;
+    tileY:number;
 
     private direction:Direction;
 
@@ -18,7 +18,7 @@ module Pacman.Prefab
 
     private computeTarget:()=>any;
 
-    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any)
+    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle)
     {
       super(game, 0, 0, 'pacman-sheet', 0);
 
@@ -35,7 +35,7 @@ module Pacman.Prefab
 
       this.map = map;
 
-      this.crop(new Phaser.Rectangle(228, 64, 16, 16), false);
+      this.crop(debugSpriteFrame, false);
 
       game.add.existing(this);
     }

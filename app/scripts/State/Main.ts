@@ -15,29 +15,63 @@ module Pacman.State
 
     ghosts:Array<Prefab.Ghost>;
 
-    blinkyLogic = () =>
+    blinkyLogic()
     {
-      return {x: this.player1.tileX, y: this.player1.tileY};
-    };
+      return () => { return {x: this.player1.tileX, y: this.player1.tileY}; };
+    }
 
-    pinkyLogic = () =>
+    pinkyLogic()
     {
-      switch (this.player1.direction)
+      return () =>
       {
-        case Prefab.Direction.North:
-          return {x: this.player1.tileX - 4, y: this.player1.tileY - 4};
-        break;
-        case Prefab.Direction.East:
-          return {x: this.player1.tileX + 4, y: this.player1.tileY};
-        break;
-        case Prefab.Direction.South:
-          return {x: this.player1.tileX, y: this.player1.tileY + 4};
-        break;
-        case Prefab.Direction.West:
-          return {x: this.player1.tileX - 4, y: this.player1.tileY};
-        break;
-      }
-    };
+        switch (this.player1.direction)
+        {
+          case Prefab.Direction.North:
+            return {x: this.player1.tileX - 4, y: this.player1.tileY - 4};
+          break;
+          case Prefab.Direction.East:
+            return {x: this.player1.tileX + 4, y: this.player1.tileY};
+          break;
+          case Prefab.Direction.South:
+            return {x: this.player1.tileX, y: this.player1.tileY + 4};
+          break;
+          case Prefab.Direction.West:
+            return {x: this.player1.tileX - 4, y: this.player1.tileY};
+          break;
+        }
+      };
+    }
+
+    inkyLogic(player1:Prefab.Pacman, blinky:Prefab.Ghost)
+    {
+      return () =>
+      {
+        var pacmanBlinkyDeltaX:number;
+        var pacmanBlinkyDeltaY:number;
+
+        switch (player1.direction)
+        {
+          case Prefab.Direction.North:
+            pacmanBlinkyDeltaX = (player1.tileX - 2) - blinky.tileX;
+            pacmanBlinkyDeltaY = (player1.tileY - 2) - blinky.tileY;
+          break;
+          case Prefab.Direction.East:
+            pacmanBlinkyDeltaX = (player1.tileX + 2) - blinky.tileX;
+            pacmanBlinkyDeltaY = player1.tileY - blinky.tileY;
+          break;
+          case Prefab.Direction.South:
+            pacmanBlinkyDeltaX = player1.tileX - blinky.tileX;
+            pacmanBlinkyDeltaY = (player1.tileY + 2) - blinky.tileY;
+          break;
+          case Prefab.Direction.West:
+            pacmanBlinkyDeltaX = (player1.tileX - 2) - blinky.tileX;
+            pacmanBlinkyDeltaY = player1.tileY - blinky.tileY;
+          break;
+        }
+
+        return {x: player1.tileX + pacmanBlinkyDeltaX, y: player1.tileY + pacmanBlinkyDeltaY};
+      };
+    }
 
     create()
     {
@@ -67,12 +101,13 @@ module Pacman.State
         }
       }
 
-      // add a ghost
-      this.ghosts = new Array<Prefab.Ghost>();
-      this.ghosts.push(new Prefab.Ghost(this.game, 13, 11, this.map, this.pinkyLogic));
-
       // add player 1
       this.player1 = new Prefab.Pacman(this.game, 100, 100, 13, 17, this.map);
+
+      // add a ghost
+      this.ghosts = new Array<Prefab.Ghost>();
+      this.ghosts["blinky"] = new Prefab.Ghost(this.game, 13, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16));
+      this.ghosts["inky"] = new Prefab.Ghost(this.game, 11, 11, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16));
     }
   }
 }
