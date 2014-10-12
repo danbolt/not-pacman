@@ -166,6 +166,7 @@ module Pacman.Prefab
         }
       }
 
+      // play animations
       switch (this.direction)
       {
         case Direction.North:
