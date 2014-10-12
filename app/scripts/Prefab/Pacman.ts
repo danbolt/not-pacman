@@ -64,7 +64,7 @@ module Pacman.Prefab
             }
           break;
           case Direction.East:
-            if (this.map.layers[0].data[this.tileY][this.tileX + 1].index == -1)
+            if (this.map.layers[0].data[this.tileY][(this.tileX + 1) % 28].index == -1)
             {
               this.tileStepCount++;
             }
@@ -76,7 +76,7 @@ module Pacman.Prefab
             }
           break;
           case Direction.West:
-            if (this.map.layers[0].data[this.tileY][this.tileX - 1].index == -1)
+            if (this.map.layers[0].data[this.tileY][(this.tileX - 1 + 28) % (28)].index == -1)
             {
               this.tileStepCount++;
             }
@@ -144,6 +144,17 @@ module Pacman.Prefab
         case Direction.West:
           this.animations.play('paku-left', null, true, false);
         break;
+      }
+
+      // if Pac-Man goes through the tunnel on the left or right side of the
+      // screen, move him to the other side
+      if (this.tileX >= this.map.layers[0].data[0].length)
+      {
+        this.tileX = 0;
+      }
+      else if (this.tileX < 0)
+      {
+        this.tileX = this.map.layers[0].data[0].length - 1;
       }
 
       this.x = this.tileX * 8 - 4; // the -4 is crude centering for the 16x16 sprite

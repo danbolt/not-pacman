@@ -77,7 +77,7 @@ module Pacman.Prefab
 
         directionOptions.push({direction: Direction.North, distance: distanceToTargetFromNorth});
       }
-      if (this.map.layers[0].data[this.tileY][this.tileX - 1].index == -1)
+      if (this.map.layers[0].data[this.tileY][(this.tileX - 1 + 28) % 28].index == -1)
       {
         var distanceToTargetFromWest:number = this.distance({x: this.tileX - 1, y: this.tileY}, this.target);
 
@@ -89,7 +89,7 @@ module Pacman.Prefab
 
         directionOptions.push({direction: Direction.South, distance: distanceToTargetFromSouth});
       }
-      if (this.map.layers[0].data[this.tileY][this.tileX + 1].index == -1)
+      if (this.map.layers[0].data[this.tileY][(this.tileX + 1) % 28].index == -1)
       {
         var distanceToTargetFromEast:number = this.distance({x: this.tileX + 1, y: this.tileY}, this.target);
 
@@ -180,6 +180,17 @@ module Pacman.Prefab
         case Direction.West:
           this.animations.play('left', null, true, false);
         break;
+      }
+
+      // if a ghost goes through the tunnel on the left or right side of the
+      // screen, move it to the other side
+      if (this.tileX >= this.map.layers[0].data[0].length)
+      {
+        this.tileX = 0;
+      }
+      else if (this.tileX < 0)
+      {
+        this.tileX = this.map.layers[0].data[0].length - 1;
       }
 
       // position sprite for rendering
