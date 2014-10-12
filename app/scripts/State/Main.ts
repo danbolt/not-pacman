@@ -127,10 +127,10 @@ module Pacman.State
 
       // add a ghost
       this.ghosts = new Array<Prefab.Ghost>();
-      this.ghosts["blinky"] = new Prefab.Ghost(this.game, 13, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16));
-      this.ghosts["pinky"] = new Prefab.Ghost(this.game, 12, 11, this.map, this.pinkyLogic(), new Phaser.Rectangle(228, 80, 16, 16));
-      this.ghosts["inky"] = new Prefab.Ghost(this.game, 11, 11, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16));
-      this.ghosts["clyde"] = new Prefab.Ghost(this.game, 10, 11, this.map, this.clydeLogic(this.player1), new Phaser.Rectangle(228, 112, 16, 16));
+      this.ghosts["blinky"] = new Prefab.Ghost(this.game, 13, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16), 126);
+      this.ghosts["pinky"] = new Prefab.Ghost(this.game, 12, 11, this.map, this.pinkyLogic(), new Phaser.Rectangle(228, 80, 16, 16), 126 + 28);
+      this.ghosts["inky"] = new Prefab.Ghost(this.game, 11, 11, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16), 126 + (28 * 2));
+      this.ghosts["clyde"] = new Prefab.Ghost(this.game, 10, 11, this.map, this.clydeLogic(this.player1), new Phaser.Rectangle(228, 112, 16, 16), 126 + (28 * 3));
     }
   }
 }

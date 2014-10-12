@@ -18,9 +18,9 @@ module Pacman.Prefab
 
     computeTarget:()=>any;
 
-    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle)
+    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle, startingTile:number)
     {
-      super(game, 0, 0, 'pacman-sheet', 0);
+      super(game, 0, 0, 'pacman-spritesheet', 0);
 
       this.tileX = tileX;
       this.tileY = tileY;
@@ -35,7 +35,10 @@ module Pacman.Prefab
 
       this.map = map;
 
-      this.crop(debugSpriteFrame, false);
+      this.animations.add('right', [startingTile, startingTile + 1], 12, true, true);
+      this.animations.add('down', [startingTile + 6, startingTile + 7], 12, true, true);
+      this.animations.add('left', [startingTile + 2, startingTile + 3], 12, true, true);
+      this.animations.add('up', [startingTile + 4, startingTile + 5], 12, true, true);
 
       game.add.existing(this);
     }
@@ -161,6 +164,22 @@ module Pacman.Prefab
             this.tileX--;
           break;
         }
+      }
+
+      switch (this.direction)
+      {
+        case Direction.North:
+          this.animations.play('up', null, true, false);
+        break;
+        case Direction.South:
+          this.animations.play('down', null, true, false);
+        break;
+        case Direction.East:
+          this.animations.play('right', null, true, false);
+        break;
+        case Direction.West:
+          this.animations.play('left', null, true, false);
+        break;
       }
 
       // position sprite for rendering
