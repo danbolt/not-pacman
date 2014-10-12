@@ -15,12 +15,17 @@ module Pacman.Prefab
 
     constructor(game:Phaser.Game, x:number, y:number, tileX:number, tileY:number, map:Phaser.Tilemap)
     {
-      super(game, x, y, 'pacman-sheet', 0);
+      super(game, x, y, 'pacman-spritesheet', 0);
 
       this.tileX = tileX;
       this.tileY = tileY;
       this.tileStepCount = 0;
       this.direction = Direction.East;
+
+      this.animations.add('paku-up', [70, 71, 16], 12, true, true);
+      this.animations.add('paku-right', [14, 15, 16], 12, true, true);
+      this.animations.add('paku-down', [98, 99, 16], 12, true, true);
+      this.animations.add('paku-left', [42, 43, 16], 12, true, true);
 
       this.map = map;
 
@@ -128,16 +133,16 @@ module Pacman.Prefab
       switch (this.direction)
       {
         case Direction.North:
-          this.crop(new Phaser.Rectangle(243, 32, 16, 16), false);
+          this.animations.play('paku-up', null, true, false);
         break;
         case Direction.East:
-          this.crop(new Phaser.Rectangle(243, 0, 16, 16), false);
+          this.animations.play('paku-right', null, true, false);
         break;
         case Direction.South:
-          this.crop(new Phaser.Rectangle(243, 48, 16, 16), false);
+          this.animations.play('paku-down', null, true, false);
         break;
         case Direction.West:
-          this.crop(new Phaser.Rectangle(243, 16, 16, 16), false);
+          this.animations.play('paku-left', null, true, false);
         break;
       }
 

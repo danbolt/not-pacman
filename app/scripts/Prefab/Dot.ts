@@ -18,7 +18,7 @@ module Pacman.Prefab
 
       this.parentState = parent;
 
-      this.crop(new Phaser.Rectangle(328, 139, 2, 2), false);
+      this.crop(new Phaser.Rectangle(325, 139, 2, 2), false);
 
       game.add.existing(this);
     }

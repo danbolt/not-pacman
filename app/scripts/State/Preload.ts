@@ -11,6 +11,8 @@ module Pacman.State {
       this.load.image('menu-background', 'assets/images/menu-background.png');
       this.load.image('pacman-sheet', 'assets/images/pacman.png');
 
+      this.load.spritesheet('pacman-spritesheet', 'assets/images/pacman.png', 16, 16, -1, 0, 0);
+
       // Load remaining assets here
     }
 
