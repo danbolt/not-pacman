@@ -16,9 +16,11 @@ module Pacman.Prefab
 
     private map:Phaser.Tilemap;
 
-    computeTarget:()=>any;
+    private computeTarget:()=>any;
 
-    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle, startingTile:number)
+    waiting:boolean;
+
+    constructor(game: Phaser.Game, tileX: number, tileY: number, map:Phaser.Tilemap, computeTarget:()=>any, debugSpriteFrame:Phaser.Rectangle, startingTile:number, waiting:boolean)
     {
       super(game, 0, 0, 'pacman-spritesheet', 0);
 
@@ -32,6 +34,7 @@ module Pacman.Prefab
       this.lastTileChangedDirectionAt = {x: tileX, y: tileY};
 
       this.computeTarget = computeTarget;
+      this.waiting = waiting;
 
       this.map = map;
 
@@ -149,20 +152,23 @@ module Pacman.Prefab
       {
         this.step = 0;
 
-        switch (this.direction)
+        if (!this.waiting)
         {
-          case Direction.North:
-            this.tileY--;
-          break;
-          case Direction.South:
-            this.tileY++;
-          break;
-          case Direction.East:
-            this.tileX++;
-          break;
-          case Direction.West:
-            this.tileX--;
-          break;
+          switch (this.direction)
+          {
+            case Direction.North:
+              this.tileY--;
+            break;
+            case Direction.South:
+              this.tileY++;
+            break;
+            case Direction.East:
+              this.tileX++;
+            break;
+            case Direction.West:
+              this.tileX--;
+            break;
+          }
         }
       }
 

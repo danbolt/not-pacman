@@ -9,7 +9,9 @@ module Pacman.Prefab
 
     private parentState:State.Main;
 
-    constructor(game: Phaser.Game, tileX:number, tileY:number, parent:State.Main)
+    private decrementDot:()=>any;
+
+    constructor(game: Phaser.Game, tileX:number, tileY:number, parent:State.Main, decrementDotFunction:()=>any)
     {
       super(game, 8 * tileX + 4, 8 * tileY + 4, 'pacman-sheet', 0);
 
@@ -20,6 +22,8 @@ module Pacman.Prefab
 
       this.crop(new Phaser.Rectangle(325, 139, 2, 2), false);
 
+      this.decrementDot = decrementDotFunction;
+
       game.add.existing(this);
     }
 
@@ -27,7 +31,8 @@ module Pacman.Prefab
     {
       if (this.parentState.player1.tileX == this.tileX && this.parentState.player1.tileY == this.tileY)
       {
-        this.kill();
+        this.decrementDot();
+        this.destroy();
       }
     }
   }

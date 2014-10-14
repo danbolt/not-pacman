@@ -1,6 +1,7 @@
 /// <reference path='../Prefab/Pacman.ts'/>
 /// <reference path='../Prefab/Dot.ts'/>
 /// <reference path='../Prefab/Ghost.ts'/>
+/// <reference path='../Helper/MonsterPenLogic.ts'/>
 
 module Pacman.State
 {
@@ -13,7 +14,10 @@ module Pacman.State
 
     private mapSprite:any;
 
-    ghosts:Array<Prefab.Ghost>;
+    private ghosts:Array<Prefab.Ghost>;
+
+    private monsterPenLogic:Helper.MonsterPenLogic;
+    private dotCount:number;
 
     blinkyLogic()
     {
@@ -105,6 +109,8 @@ module Pacman.State
       this.mapSprite = this.game.add.sprite(0, 0, 'pacman-sheet');
       this.mapSprite.crop(new Phaser.Rectangle(0, 0, 224, 248));
 
+      this.dotCount = 0;
+
       // add the dots
       for (var iy = 0; iy < this.map.layers[0].data.length; iy++)
       {
@@ -117,7 +123,8 @@ module Pacman.State
 
           if (this.map.layers[0].data[iy][ix].index == -1)
           {
-            new Prefab.Dot(this.game, ix, iy, this);
+            new Prefab.Dot(this.game, ix, iy, this, ()=>{ this.dotCount--; });
+            this.dotCount++;
           }
         }
       }
@@ -127,10 +134,12 @@ module Pacman.State
 
       // add a ghost
       this.ghosts = new Array<Prefab.Ghost>();
-      this.ghosts["blinky"] = new Prefab.Ghost(this.game, 14, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16), 126);
-      this.ghosts["pinky"] = new Prefab.Ghost(this.game, 11, 14, this.map, this.pinkyLogic(), new Phaser.Rectangle(228, 80, 16, 16), 126 + 28);
-      this.ghosts["inky"] = new Prefab.Ghost(this.game, 13, 14, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16), 126 + (28 * 2));
-      this.ghosts["clyde"] = new Prefab.Ghost(this.game, 15 , 14, this.map, this.clydeLogic(this.player1), new Phaser.Rectangle(228, 112, 16, 16), 126 + (28 * 3));
+      this.ghosts["blinky"] = new Prefab.Ghost(this.game, 14, 11, this.map, this.blinkyLogic(), new Phaser.Rectangle(228, 64, 16, 16), 126, false);
+      this.ghosts["pinky"] = new Prefab.Ghost(this.game, 13, 14, this.map, this.pinkyLogic(), new Phaser.Rectangle(228, 80, 16, 16), 126 + 28, true);
+      this.ghosts["inky"] = new Prefab.Ghost(this.game, 11, 14, this.map, this.inkyLogic(this.player1, this.ghosts["blinky"]), new Phaser.Rectangle(228, 96, 16, 16), 126 + (28 * 2), true);
+      this.ghosts["clyde"] = new Prefab.Ghost(this.game, 15 , 14, this.map, this.clydeLogic(this.player1), new Phaser.Rectangle(228, 112, 16, 16), 126 + (28 * 3), true);
+
+      this.monsterPenLogic = new Helper.MonsterPenLogic(this.game, () => { return this.dotCount; }, this.ghosts);
     }
   }
 }
