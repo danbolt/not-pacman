@@ -123,7 +123,7 @@ module Pacman.State
 
           if (this.map.layers[0].data[iy][ix].index == -1)
           {
-            new Prefab.Dot(this.game, ix, iy, this, ()=>{ this.dotCount--; });
+            new Prefab.Dot(this.game, ix, iy, this, ()=>{ this.monsterPenLogic.resetTimer(); this.dotCount--; });
             this.dotCount++;
           }
         }
